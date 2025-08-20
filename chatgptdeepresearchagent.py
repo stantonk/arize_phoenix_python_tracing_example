@@ -20,7 +20,7 @@ class ChatGPTDeepResearchAgent:
 
     @tracer.tool
     def _call_tool(self, command):
-        print(f"sub-agent: {command}")
+        print(f"fake tool call: {command}")
 
     @tracer.agent
     def run_agent(self, commands: List[str]):

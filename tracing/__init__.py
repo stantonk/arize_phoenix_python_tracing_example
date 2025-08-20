@@ -1,10 +1,23 @@
 import os
 from phoenix.otel import register
 
-os.environ["PHOENIX_COLLECTOR_ENDPOINT"] = "http://localhost:4317"
+PROJECT = "my-llm-app"
+
+# # You can either use OTEL GRPC
+# os.environ["PHOENIX_COLLECTOR_ENDPOINT"] = "http://localhost:4317"
+#
+# tracer_provider = register(
+#     project_name=PROJECT,
+#     auto_instrument=True,
+#     protocol="grpc",
+# )
+
+# OR, use http/protobuf
+os.environ["PHOENIX_COLLECTOR_ENDPOINT"] = "http://localhost:6006/v1/traces"
 
 tracer_provider = register(
-  project_name="my-llm-app", # Default is 'default'
-  auto_instrument=True, # See 'Trace all calls made to a library' below
+    project_name=PROJECT,
+    auto_instrument=True,
+    protocol="http/protobuf",
 )
 tracer = tracer_provider.get_tracer(__name__)
